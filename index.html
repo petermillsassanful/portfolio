@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Peter Mills Assanful — Cybersecurity-focused Developer & Problem Solver. SOC/security enthusiast, web developer, and Flutter mobile app engineer."
+    />
+    <meta name="author" content="Peter Mills Assanful" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Peter Mills Assanful — Cybersecurity Developer" />
+    <meta
+      property="og:description"
+      content="Cybersecurity-focused Developer & Problem Solver. SOC/security enthusiast, web developer, and Flutter mobile app engineer."
+    />
+
+    <title>Peter Mills Assanful — Cybersecurity Developer &amp; Problem Solver</title>
+
+    <!-- Google Fonts: Inter (sans-serif) + JetBrains Mono (monospace accent) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Peter Mills Assanful",
+        "jobTitle": "Cybersecurity Developer & SOC Analyst",
+        "url": "https://github.com/petermillsassanful",
+        "sameAs": [
+          "https://www.linkedin.com/in/peter-mills-assanful-b9104a194",
+          "https://github.com/petermillsassanful"
+        ],
+        "description": "Cybersecurity-focused Developer & Problem Solver. Specializing in security operations (SOC), web development, and interactive user interfaces."
+      }
+    </script>
+
+    <!-- Twitter Card metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Peter Mills Assanful — Cybersecurity Developer" />
+    <meta name="twitter:description" content="Cybersecurity-focused Developer & Problem Solver. SOC/security enthusiast, web developer, and Flutter mobile app engineer." />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+  </head>
+
+  <body>
+    <!-- =============================================
+         NAVIGATION
+    ============================================= -->
+    <header class="nav-header" role="banner">
+      <nav class="navbar glass" aria-label="Primary navigation">
+        <!-- Logo / Wordmark -->
+        <a href="#hero" class="nav-logo" aria-label="Peter Mills Assanful – Back to top">
+          <img src="logo.png" alt="Peter Mills Assanful" class="nav-logo__img" />
+        </a>
+
+        <!-- Desktop nav links -->
+        <ul class="nav-links" role="list">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#work" class="nav-link">Work</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Theme Switcher Button -->
+        <button
+          class="theme-toggle"
+          id="theme-toggle-btn"
+          aria-label="Switch color theme"
+          title="Switch Theme"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+        </button>
+
+        <!-- Hamburger button (mobile) -->
+        <button
+          class="hamburger"
+          id="hamburger-btn"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Mobile full-screen overlay menu -->
+    <div
+      class="mobile-menu"
+      id="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+      aria-hidden="true"
+    >
+      <nav aria-label="Mobile navigation">
+        <ul class="mobile-menu__links" role="list">
+          <li>
+            <a href="#about" class="mobile-menu__link" tabindex="-1">
+              <span class="mono-label">01.</span>About
+            </a>
+          </li>
+          <li>
+            <a href="#work" class="mobile-menu__link" tabindex="-1">
+              <span class="mono-label">02.</span>Work
+            </a>
+          </li>
+          <li>
+            <a href="#contact" class="mobile-menu__link" tabindex="-1">
+              <span class="mono-label">03.</span>Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- =============================================
+         MAIN CONTENT
+    ============================================= -->
+    <main id="main-content">
+
+      <!-- HERO SECTION -->
+      <section
+        class="hero"
+        id="hero"
+        aria-labelledby="hero-headline"
+      >
+        <!-- Animated canvas background (scan grid + particles drawn in JS) -->
+        <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
+        <!-- Radial glow overlay -->
+        <div class="hero__glow" aria-hidden="true"></div>
+
+        <!-- Scan lines overlay -->
+        <div class="hero__scanlines" aria-hidden="true"></div>
+
+        <!-- Hero Content -->
+        <div class="hero__content" id="hero-content">
+          <!-- Kicker / eyebrow label -->
+          <p class="hero__kicker mono-label reveal-item" aria-label="Role indicator">
+            <span class="kicker__dot" aria-hidden="true"></span>
+            Available for opportunities
+          </p>
+
+          <!-- Main headline — typewriter effect -->
+          <h1
+            class="hero__headline reveal-item"
+            id="hero-headline"
+            aria-label="Peter Mills Assanful"
+          >
+            <span class="headline__line" id="typewriter-line-1" aria-hidden="true"></span>
+            <span class="headline__line headline__line--accent" id="typewriter-line-2" aria-hidden="true"></span>
+            <span class="headline__line" id="typewriter-line-3" aria-hidden="true"><span class="typewriter-cursor" id="typewriter-cursor">|</span></span>
+          </h1>
+
+          <!-- Subheadline (typed role) -->
+          <p class="hero__subheadline reveal-item">
+            Cybersecurity-focused Developer
+            <span class="subheadline__amp">&amp;</span>
+            Problem Solver
+          </p>
+
+          <!-- Supporting descriptor -->
+          <p class="hero__descriptor reveal-item">
+            SOC analyst &amp; security enthusiast bridging the gap between
+            threat intelligence and engineering, shipping polished web experiences
+            and cross-platform Flutter apps.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero__ctas reveal-item">
+            <a href="#work" class="btn btn--primary">
+              <span>View My Work</span>
+              <svg
+                class="btn__icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#contact" class="btn btn--ghost">Let's Connect</a>
+          </div>
+
+          <!-- Tech tags -->
+          <div class="hero__tags reveal-item" aria-label="Specialties">
+            <span class="tag">SOC / Blue Team</span>
+            <span class="tag">Web Dev</span>
+            <span class="tag">Flutter</span>
+            <span class="tag">Threat Analysis</span>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="hero__scroll-indicator" aria-label="Scroll down to explore">
+          <span class="scroll-label mono-label">Scroll</span>
+          <div class="scroll-arrow" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           ABOUT SECTION — Phase 2
+      ============================================= -->
+      <section id="about" class="about-section" aria-labelledby="about-heading">
+
+        <!-- Section header -->
+        <div class="section-header reveal-item" data-reveal-group="about">
+          <p class="mono-label section-eyebrow">
+            <span aria-hidden="true">// </span>01. About Me
+          </p>
+          <h2 class="section-title" id="about-heading">
+            The person behind the terminal
+          </h2>
+        </div>
+
+        <!-- Two-column intro layout -->
+        <div class="about-intro">
+
+          <!-- Bio column -->
+          <div class="about-bio reveal-item" data-reveal-group="about">
+            <p class="about-bio__lead">
+              I'm an IT professional turned cybersecurity practitioner, most at home
+              in a SOC environment, dissecting alerts, hunting threats, and turning
+              raw telemetry into decisive action.
+            </p>
+            <p class="about-bio__body">
+              What sets me apart is that I don't just defend systems. I build them.
+              I craft polished web experiences with clean, semantic HTML/CSS and
+              hardware-accelerated animations, and I ship cross-platform mobile apps
+              with Flutter and Dart. The intersection of security thinking and
+              engineering discipline is where I do my best work: pragmatic,
+              performance-aware, and always user-first.
+            </p>
+            <p class="about-bio__body">
+              Whether I'm configuring SIEM rules, optimising a Largest Contentful
+              Paint score, or designing a gesture-driven mobile UI, the goal is always
+              the same: build things that are fast, resilient, and hard to break.
+            </p>
+
+            <!-- Quick-stat strip -->
+            <div class="about-stats" aria-label="At a glance">
+              <div class="about-stat">
+                <span class="about-stat__value">SOC</span>
+                <span class="about-stat__label mono-label">Blue Team</span>
+              </div>
+              <div class="about-stat__divider" aria-hidden="true"></div>
+              <div class="about-stat">
+                <span class="about-stat__value">Web</span>
+                <span class="about-stat__label mono-label">Front-End Dev</span>
+              </div>
+              <div class="about-stat__divider" aria-hidden="true"></div>
+              <div class="about-stat">
+                <span class="about-stat__value">Flutter</span>
+                <span class="about-stat__label mono-label">Mobile Dev</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative terminal card -->
+          <aside
+            class="about-terminal glass reveal-item"
+            data-reveal-group="about"
+            aria-label="Terminal flavour — current status"
+          >
+            <div class="terminal__titlebar" aria-hidden="true">
+              <span class="terminal__dot terminal__dot--red"></span>
+              <span class="terminal__dot terminal__dot--amber"></span>
+              <span class="terminal__dot terminal__dot--green"></span>
+              <span class="terminal__filename">status.sh</span>
+            </div>
+            <div class="terminal__body">
+              <div id="terminal-history">
+                <p class="terminal__line">
+                  <span class="terminal__prompt">guest@petermills:~$</span>
+                  <span class="terminal__cmd">whoami</span>
+                </p>
+                <p class="terminal__output">peter_mills_assanful</p>
+
+                <p class="terminal__line">
+                  <span class="terminal__prompt">guest@petermills:~$</span>
+                  <span class="terminal__cmd">cat current_role.txt</span>
+                </p>
+                <p class="terminal__output">Cybersecurity Developer &amp; Problem Solver</p>
+
+                <p class="terminal__line">
+                  <span class="terminal__prompt">guest@petermills:~$</span>
+                  <span class="terminal__cmd">ls skills/</span>
+                </p>
+                <p class="terminal__output">soc/ &nbsp;web_dev/ &nbsp;flutter/ &nbsp;threat_analysis/</p>
+              </div>
+
+              <!-- Interactive input row -->
+              <div class="terminal__input-line">
+                <span class="terminal__prompt">guest@petermills:~$</span>
+                <input
+                  type="text"
+                  id="terminal-cli"
+                  class="terminal__input"
+                  placeholder="Type 'help'..."
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  aria-label="Terminal CLI input"
+                />
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- ── Skills grid ── -->
+        <div class="skills-header reveal-item" data-reveal-group="skills">
+          <p class="mono-label section-eyebrow">
+            <span aria-hidden="true">// </span>Core competencies
+          </p>
+          <h3 class="skills-title">What I work with</h3>
+        </div>
+
+        <ul class="skills-grid" role="list" aria-label="Skill areas">
+
+          <!-- Card 1 — SOC & Security -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="0"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Shield with check mark — security/SOC -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M20 4L6 9.6V20c0 7.6 5.9 14.7 14 16.4C28.1 34.7 34 27.6 34 20V9.6L20 4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M14 20l4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">SOC / Blue Team</p>
+            <h4 class="skill-card__title">Security Operations &amp; Threat Analysis</h4>
+            <p class="skill-card__desc">
+              SIEM monitoring, log correlation, incident triage, and threat
+              hunting. Translating raw alerts into clear, actionable intelligence.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">SIEM</li>
+              <li class="skill-pill">Log Analysis</li>
+              <li class="skill-pill">Threat Hunting</li>
+              <li class="skill-pill">Incident Response</li>
+            </ul>
+          </li>
+
+          <!-- Card 2 — Scroll-driven animations -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="1"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Scroll / motion lines icon -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <rect x="6" y="8" width="28" height="24" rx="4" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 16h16M12 20h10M12 24h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M30 22l3-3-3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">Front-End</p>
+            <h4 class="skill-card__title">Scroll-Driven &amp; Front-End Animation</h4>
+            <p class="skill-card__desc">
+              Hardware-accelerated CSS animations, Intersection Observer reveals,
+              and scroll-driven timelines, motion that enhances without distracting.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">CSS Animations</li>
+              <li class="skill-pill">Scroll-Driven API</li>
+              <li class="skill-pill">IntersectionObserver</li>
+              <li class="skill-pill">Web Vitals</li>
+            </ul>
+          </li>
+
+          <!-- Card 3 — Performance & Assets -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="2"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Speed / gauge icon -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M8 26a12 12 0 1 1 24 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M20 26l-5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="20" cy="26" r="2" fill="currentColor"/>
+                <path d="M13 17l1.5 1.5M27 17l-1.5 1.5M10 26h2M28 26h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">Performance</p>
+            <h4 class="skill-card__title">Asset Optimisation &amp; Web Performance</h4>
+            <p class="skill-card__desc">
+              WebP/AVIF image pipelines, lazy-loading, LCP optimisation, and
+              code-splitting strategies for fast first contentful paint.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">WebP / AVIF</li>
+              <li class="skill-pill">Lazy Loading</li>
+              <li class="skill-pill">LCP / CWV</li>
+              <li class="skill-pill">Critical CSS</li>
+            </ul>
+          </li>
+
+          <!-- Card 4 — Flutter / Dart -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="3"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Mobile device / Flutter-style diamond icon -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <rect x="11" y="5" width="18" height="30" rx="3.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M15 33h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M18 11l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 16H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">Mobile</p>
+            <h4 class="skill-card__title">Flutter &amp; Dart Mobile Development</h4>
+            <p class="skill-card__desc">
+              Cross-platform iOS &amp; Android apps built with Flutter. Clean
+              widget architecture, state management, and pixel-perfect UI from a
+              single codebase.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">Flutter</li>
+              <li class="skill-pill">Dart</li>
+              <li class="skill-pill">State Management</li>
+              <li class="skill-pill">Cross-Platform</li>
+            </ul>
+          </li>
+
+          <!-- Card 5 — Custom Mobile UI -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="4"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Gesture / touch swipe icon -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M16 10v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M12 14v8M20 13v9M24 16v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M12 22c0 5 2.5 10 8 10s8-5 8-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">UI / UX</p>
+            <h4 class="skill-card__title">Fluid Custom Mobile UI &amp; Gesture Nav</h4>
+            <p class="skill-card__desc">
+              Building responsive hamburger menus, bottom-sheet navigation,
+              swipe gestures, and touch-optimised interactions that feel native
+              on any device.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">Gesture Nav</li>
+              <li class="skill-pill">Hamburger Menus</li>
+              <li class="skill-pill">Responsive UI</li>
+              <li class="skill-pill">Touch UX</li>
+            </ul>
+          </li>
+
+          <!-- Card 6 — Web Development -->
+          <li
+            class="skill-card glass reveal-item"
+            data-reveal-group="skills"
+            data-skill-index="5"
+          >
+            <div class="skill-card__icon-wrap" aria-hidden="true">
+              <!-- Code brackets / dev icon -->
+              <svg class="skill-card__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M14 14l-7 6 7 6M26 14l7 6-7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 10l-4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="skill-card__tag mono-label">Web Dev</p>
+            <h4 class="skill-card__title">Semantic Web Development</h4>
+            <p class="skill-card__desc">
+              Hand-crafted HTML5, modern CSS architecture (custom properties,
+              container queries, glassmorphism), and vanilla JS. Zero-dependency,
+              production-grade code.
+            </p>
+            <ul class="skill-card__pills" aria-label="Tools and concepts">
+              <li class="skill-pill">HTML5 / CSS3</li>
+              <li class="skill-pill">Vanilla JS</li>
+              <li class="skill-pill">Design Systems</li>
+              <li class="skill-pill">Accessibility</li>
+            </ul>
+          </li>
+
+        </ul><!-- /skills-grid -->
+
+      </section><!-- /about -->
+
+      <!-- =============================================
+           WORK / PROJECT SHOWCASE — Phase 3
+      ============================================= -->
+      <section id="work" class="work-section" aria-labelledby="work-heading">
+
+        <!-- Section header -->
+        <div class="section-header reveal-item" data-reveal-group="work">
+          <p class="mono-label section-eyebrow"><span aria-hidden="true">// </span>02. Projects</p>
+          <h2 class="section-title" id="work-heading">Selected work</h2>
+        </div>
+
+        <!-- Project grid -->
+        <ul class="projects-grid" role="list" aria-label="Featured projects">
+
+          <!-- ── Project 1: Zenrixa ── -->
+          <li class="project-card glass reveal-item" data-reveal-group="work" data-project-index="0">
+            <article>
+              <!-- Card number -->
+              <span class="project-card__number mono-label" aria-hidden="true">01</span>
+
+              <!-- Top accent bar: VR / scroll-animation colour -->
+              <div class="project-card__bar project-card__bar--zenrixa" aria-hidden="true"></div>
+
+              <div class="project-card__body">
+                <h3 class="project-card__title">Zenrixa</h3>
+                <p class="project-card__hook">
+                  A VR-forward website where scroll IS the interaction. Every pixel of scroll rewrites the scene.
+                </p>
+
+                <!-- Tech stack pills -->
+                <ul class="project-card__stack" aria-label="Technologies">
+                  <li class="stack-pill">WebGL</li>
+                  <li class="stack-pill">GSAP</li>
+                  <li class="stack-pill">Scroll-Driven API</li>
+                  <li class="stack-pill">CSS 3D</li>
+                  <li class="stack-pill">Vanilla JS</li>
+                </ul>
+              </div>
+
+              <!-- Hover overlay -->
+              <div class="project-card__hover-overlay" aria-hidden="true">
+                <span class="project-card__hover-label mono-label">View Case Study</span>
+                <!-- Arrow icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+
+              <!-- Full-area button to open modal -->
+              <button
+                class="project-card__trigger"
+                aria-haspopup="dialog"
+                aria-controls="modal-zenrixa"
+                data-modal="modal-zenrixa"
+                aria-label="Open Zenrixa case study"
+              >
+                <span class="sr-only">Open Zenrixa case study</span>
+              </button>
+            </article>
+          </li>
+
+          <!-- ── Project 2: Academic Hub ── -->
+          <li class="project-card glass reveal-item" data-reveal-group="work" data-project-index="1">
+            <article>
+              <span class="project-card__number mono-label" aria-hidden="true">02</span>
+              <div class="project-card__bar project-card__bar--academic" aria-hidden="true"></div>
+
+              <div class="project-card__body">
+                <h3 class="project-card__title">Academic Hub</h3>
+                <p class="project-card__hook">
+                  A full-stack LMS built in 10 structured phases. Dual roles, auto-enrollment, and PWA delivery.
+                </p>
+                <ul class="project-card__stack" aria-label="Technologies">
+                  <li class="stack-pill">Next.js 14</li>
+                  <li class="stack-pill">Supabase</li>
+                  <li class="stack-pill">PostgreSQL</li>
+                  <li class="stack-pill">PWA</li>
+                  <li class="stack-pill">TypeScript</li>
+                </ul>
+              </div>
+
+              <div class="project-card__hover-overlay" aria-hidden="true">
+                <span class="project-card__hover-label mono-label">View Case Study</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+
+              <button
+                class="project-card__trigger"
+                aria-haspopup="dialog"
+                aria-controls="modal-academic"
+                data-modal="modal-academic"
+                aria-label="Open Academic Hub case study"
+              ><span class="sr-only">Open Academic Hub case study</span></button>
+            </article>
+          </li>
+
+          <!-- ── Project 3: Melody ── -->
+          <li class="project-card glass reveal-item" data-reveal-group="work" data-project-index="2">
+            <article>
+              <span class="project-card__number mono-label" aria-hidden="true">03</span>
+              <div class="project-card__bar project-card__bar--melody" aria-hidden="true"></div>
+
+              <div class="project-card__body">
+                <h3 class="project-card__title">Melody</h3>
+                <p class="project-card__hook">
+                  A luxury editorial portfolio showcasing fashion model Melody. Expressive layout, smooth typography, and booking workflow.
+                </p>
+                <ul class="project-card__stack" aria-label="Technologies">
+                  <li class="stack-pill">Vite</li>
+                  <li class="stack-pill">React</li>
+                  <li class="stack-pill">Tailwind CSS</li>
+                  <li class="stack-pill">Framer Motion</li>
+                  <li class="stack-pill">TypeScript</li>
+                </ul>
+              </div>
+
+              <div class="project-card__hover-overlay" aria-hidden="true">
+                <span class="project-card__hover-label mono-label">View Case Study</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+
+              <button
+                class="project-card__trigger"
+                aria-haspopup="dialog"
+                aria-controls="modal-melody"
+                data-modal="modal-melody"
+                aria-label="Open Melody case study"
+              ><span class="sr-only">Open Melody case study</span></button>
+            </article>
+          </li>
+
+          <!-- ── Project 4: V2 Herbal Care Clinic ── -->
+          <li class="project-card glass reveal-item" data-reveal-group="work" data-project-index="3">
+            <article>
+              <span class="project-card__number mono-label" aria-hidden="true">04</span>
+              <div class="project-card__bar project-card__bar--v2herbal" aria-hidden="true"></div>
+
+              <div class="project-card__body">
+                <h3 class="project-card__title">V2 Herbal Care</h3>
+                <p class="project-card__hook">
+                  A holistic healthcare and naturopathy website built for V2 Herbal Care Clinic in Ghana. Features automated booking, stroke care catalog, and health resources.
+                </p>
+                <ul class="project-card__stack" aria-label="Technologies">
+                  <li class="stack-pill">Vite</li>
+                  <li class="stack-pill">React</li>
+                  <li class="stack-pill">Tailwind CSS</li>
+                  <li class="stack-pill">TypeScript</li>
+                </ul>
+              </div>
+
+              <div class="project-card__hover-overlay" aria-hidden="true">
+                <span class="project-card__hover-label mono-label">View Case Study</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+
+              <button
+                class="project-card__trigger"
+                aria-haspopup="dialog"
+                aria-controls="modal-v2herbal"
+                data-modal="modal-v2herbal"
+                aria-label="Open V2 Herbal Care case study"
+              ><span class="sr-only">Open V2 Herbal Care case study</span></button>
+            </article>
+          </li>
+
+        </ul><!-- /projects-grid -->
+      </section><!-- /work -->
+
+      <!-- =============================================
+           PROJECT MODALS — Native <dialog> elements
+           Free focus trapping, Esc key, ::backdrop
+      ============================================= -->
+
+      <!-- Modal: Zenrixa -->
+      <dialog class="project-modal" id="modal-zenrixa" aria-labelledby="modal-zenrixa-title">
+        <div class="modal__inner">
+          <header class="modal__header">
+            <div class="modal__meta">
+              <p class="mono-label modal__eyebrow"><span aria-hidden="true">// </span>Project 01</p>
+              <h2 class="modal__title" id="modal-zenrixa-title">Zenrixa</h2>
+              <p class="modal__tagline">Where scroll becomes spectacle.</p>
+            </div>
+            <button class="modal__close" aria-label="Close Zenrixa case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </header>
+
+          <div class="modal__content">
+            <div class="modal__description">
+              <h3 class="modal__section-label mono-label">Overview</h3>
+              <p>Zenrixa is a VR-themed website built as a flagship interaction piece. Scroll progress directly drives 3D scene transformations, camera movements, and ambient particle fields. No page transitions, every pixel of vertical scroll rewrites the visual state in real time.</p>
+              <p>The challenge was achieving cinematic motion without sacrificing performance: all animations run on the compositor thread via <code>transform</code> and <code>opacity</code>, with the Scroll-Driven Animations API providing the timeline. WebGL handles the volumetric environment.</p>
+
+              <h3 class="modal__section-label mono-label">My Role</h3>
+              <p>Sole front-end architect and designer. Responsible for the WebGL scene graph, scroll-animation pipeline, performance budget, and the custom CSS-only design system.</p>
+
+              <div class="modal__detail-grid">
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Type</span>
+                  <span class="modal__detail-value">VR / Interactive Website</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Focus</span>
+                  <span class="modal__detail-value">Scroll-Driven Animation</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Status</span>
+                  <span class="modal__detail-value modal__detail-value--live">
+                    <span class="modal__live-dot" aria-hidden="true"></span>Complete
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech stack full list -->
+            <div class="modal__tech">
+              <h3 class="modal__section-label mono-label">Stack</h3>
+              <ul class="modal__tech-pills" aria-label="Technologies used">
+                <li class="modal__pill">WebGL / Three.js</li>
+                <li class="modal__pill">Scroll-Driven Animations API</li>
+                <li class="modal__pill">GSAP</li>
+                <li class="modal__pill">CSS 3D Transforms</li>
+                <li class="modal__pill">Vanilla JS (ES2022)</li>
+                <li class="modal__pill">CSS Custom Properties</li>
+                <li class="modal__pill">HTML5 Canvas</li>
+              </ul>
+            </div>
+          </div>
+
+          <footer class="modal__footer">
+            <!-- Primary CTA: real live site -->
+            <a
+              href="https://petermillsassanful.github.io/peterportfolio/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary modal__cta"
+              aria-label="Launch Zenrixa live site (opens in new tab)"
+            >
+              <!-- External link icon -->
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Launch Live Site
+            </a>
+            <!-- Secondary: GitHub source -->
+            <a
+              href="https://github.com/petermillsassanful/zenrixa"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--ghost modal__cta"
+              aria-label="View Zenrixa source code on GitHub (opens in new tab)"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+              View Code
+            </a>
+            <button class="btn btn--ghost modal__close-btn">Close</button>
+          </footer>
+
+        </div>
+      </dialog>
+
+      <!-- Modal: Academic Hub -->
+      <dialog class="project-modal" id="modal-academic" aria-labelledby="modal-academic-title">
+        <div class="modal__inner">
+          <header class="modal__header">
+            <div class="modal__meta">
+              <p class="mono-label modal__eyebrow"><span aria-hidden="true">// </span>Project 02</p>
+              <h2 class="modal__title" id="modal-academic-title">Academic Hub</h2>
+              <p class="modal__tagline">A full-stack LMS engineered across 10 deliberate sprints.</p>
+            </div>
+            <button class="modal__close" aria-label="Close Academic Hub case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </header>
+
+          <div class="modal__content">
+            <div class="modal__description">
+              <h3 class="modal__section-label mono-label">Overview</h3>
+              <p>Academic Hub is a production-grade Learning Management System built across 10 structured phases. It handles dual user roles, lecturers and students, with automatic enrollment routing based on academic level and course prerequisites.</p>
+              <p>The system ships as a PWA with offline capability, push notifications, and a mobile-first layout. Supabase powers real-time data, row-level security, and auth, while Next.js 14's App Router handles nested layouts and server components for near-instant page loads.</p>
+
+              <h3 class="modal__section-label mono-label">My Role</h3>
+              <p>Lead developer and architect. Designed the database schema, RLS policies, component hierarchy, and the overall developer workflow used to accelerate each phase build.</p>
+
+              <div class="modal__detail-grid">
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Type</span>
+                  <span class="modal__detail-value">Full-Stack Web App / LMS</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Phases</span>
+                  <span class="modal__detail-value">10 structured sprints</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Status</span>
+                  <span class="modal__detail-value modal__detail-value--live">
+                    <span class="modal__live-dot" aria-hidden="true"></span>Complete
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal__tech">
+              <h3 class="modal__section-label mono-label">Stack</h3>
+              <ul class="modal__tech-pills" aria-label="Technologies used">
+                <li class="modal__pill">Next.js 14 (App Router)</li>
+                <li class="modal__pill">Supabase (PostgreSQL + Auth)</li>
+                <li class="modal__pill">TypeScript</li>
+                <li class="modal__pill">PostgreSQL</li>
+                <li class="modal__pill">PWA / Service Worker</li>
+                <li class="modal__pill">Row-Level Security</li>
+                <li class="modal__pill">Tailwind CSS</li>
+              </ul>
+            </div>
+          </div>
+
+          <footer class="modal__footer">
+            <!-- Primary CTA: real live site -->
+            <a
+              href="https://academic-hub-ruddy-one.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary modal__cta"
+              aria-label="Launch Academic Hub live site (opens in new tab)"
+            >
+              <!-- External link icon -->
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Launch Live Site
+            </a>
+            <!-- Secondary: GitHub source -->
+            <a
+              href="https://github.com/petermillsassanful/academic-hub"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--ghost modal__cta"
+              aria-label="View Academic Hub source code on GitHub (opens in new tab)"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+              View Code
+            </a>
+            <button class="btn btn--ghost modal__close-btn">Close</button>
+          </footer>
+
+        </div>
+      </dialog>
+
+      <!-- Modal: Melody -->
+      <dialog class="project-modal" id="modal-melody" aria-labelledby="modal-melody-title">
+        <div class="modal__inner">
+          <header class="modal__header">
+            <div class="modal__meta">
+              <p class="mono-label modal__eyebrow"><span aria-hidden="true">// </span>Project 03</p>
+              <h2 class="modal__title" id="modal-melody-title">Melody</h2>
+              <p class="modal__tagline">Luxury editorial portfolio for modern runway and campaigns.</p>
+            </div>
+            <button class="modal__close" aria-label="Close Melody case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </header>
+
+          <div class="modal__content">
+            <div class="modal__description">
+              <h3 class="modal__section-label mono-label">Overview</h3>
+              <p>Melody is a premium, minimal editorial portfolio website showcasing an emerging fashion model based in Accra, Ghana. The site presents collections of high-fashion editorial portraits, runway confirmation sheets, and brand campaigns. Designed with sophisticated editorial typography, luxurious negative space, and smooth, immersive transitions that mirror high-end fashion print magazines.</p>
+              <p>The challenge was delivering a media-heavy gallery website that loads near-instantly on mobile devices. This was achieved using Vite for lightning-fast bundling, asset loading pipelines for responsive imagery, and hardware-accelerated layouts to support high-fidelity visuals.</p>
+
+              <h3 class="modal__section-label mono-label">My Role</h3>
+              <p>Sole front-end developer and designer. Crafted the typography system, grid portfolios, and responsive layout interfaces that ensure standard layout consistency across different mobile and desktop device sizes.</p>
+
+              <div class="modal__detail-grid">
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Type</span>
+                  <span class="modal__detail-value">Luxury Editorial Portfolio</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Market</span>
+                  <span class="modal__detail-value">Accra, Ghana / International</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Status</span>
+                  <span class="modal__detail-value modal__detail-value--live">
+                    <span class="modal__live-dot" aria-hidden="true"></span>Live
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal__tech">
+              <h3 class="modal__section-label mono-label">Stack</h3>
+              <ul class="modal__tech-pills" aria-label="Technologies used">
+                <li class="modal__pill">Vite</li>
+                <li class="modal__pill">React</li>
+                <li class="modal__pill">Tailwind CSS</li>
+                <li class="modal__pill">Framer Motion</li>
+                <li class="modal__pill">TypeScript</li>
+                <li class="modal__pill">Cormorant Garamond Typeface</li>
+              </ul>
+            </div>
+          </div>
+
+          <footer class="modal__footer">
+            <!-- Primary CTA: real live site -->
+            <a
+              href="https://melody-editorial-flow.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary modal__cta"
+              aria-label="Launch Melody live site (opens in new tab)"
+            >
+              <!-- External link icon -->
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Launch Live Site
+            </a>
+            <!-- Secondary: GitHub source -->
+            <a
+              href="https://github.com/petermillsassanful/melody-editorial-flow"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--ghost modal__cta"
+              aria-label="View Melody source code on GitHub (opens in new tab)"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+              View Code
+            </a>
+            <button class="btn btn--ghost modal__close-btn">Close</button>
+          </footer>
+        </div>
+      </dialog>
+
+      <!-- Modal: V2 Herbal Care Clinic -->
+      <dialog class="project-modal" id="modal-v2herbal" aria-labelledby="modal-v2herbal-title">
+        <div class="modal__inner">
+          <header class="modal__header">
+            <div class="modal__meta">
+              <p class="mono-label modal__eyebrow"><span aria-hidden="true">// </span>Project 04</p>
+              <h2 class="modal__title" id="modal-v2herbal-title">V2 Herbal Care</h2>
+              <p class="modal__tagline">Traditional medicine meets modern medical clinic accessibility.</p>
+            </div>
+            <button class="modal__close" aria-label="Close V2 Herbal Care case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </header>
+
+          <div class="modal__content">
+            <div class="modal__description">
+              <h3 class="modal__section-label mono-label">Overview</h3>
+              <p>V2 Herbal Care Clinic is a specialized medical center based in Weija Gbawe, Ghana, offering holistic healthcare with focused regimens in naturopathy, stroke care, and general wellbeing. The website acts as a modern, accessible interface for patients seeking natural treatment plans, scheduling virtual or physical clinic check-ups, and learning about herbal treatment catalogs.</p>
+              <p>The challenge was building an authoritative, clean, and clinical experience that bridges the gap between natural herbal therapies and professional clinical standards. This was implemented with semantic layouts, clean grids, appointment request modules, and optimized assets to ensure fast, reliable loads across regions in Ghana with varied network conditions.</p>
+
+              <h3 class="modal__section-label mono-label">My Role</h3>
+              <p>Full-stack developer and designer. Responsible for mapping the content structure, clinic hours representation, service catalogs, responsive form integrations, and hosting configuration.</p>
+
+              <div class="modal__detail-grid">
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Type</span>
+                  <span class="modal__detail-value">Medical &amp; Clinic Website</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Location</span>
+                  <span class="modal__detail-value">Weija Gbawe Municipal, Ghana</span>
+                </div>
+                <div class="modal__detail-item">
+                  <span class="modal__detail-label mono-label">Status</span>
+                  <span class="modal__detail-value modal__detail-value--live">
+                    <span class="modal__live-dot" aria-hidden="true"></span>Live
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal__tech">
+              <h3 class="modal__section-label mono-label">Stack</h3>
+              <ul class="modal__tech-pills" aria-label="Technologies used">
+                <li class="modal__pill">Vite</li>
+                <li class="modal__pill">React</li>
+                <li class="modal__pill">Tailwind CSS</li>
+                <li class="modal__pill">TypeScript</li>
+                <li class="modal__pill">Structured Schema Data</li>
+              </ul>
+            </div>
+          </div>
+
+          <footer class="modal__footer">
+            <!-- Primary CTA: real live site -->
+            <a
+              href="https://v2herbalcareclinic.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary modal__cta"
+              aria-label="Launch V2 Herbal Care live site (opens in new tab)"
+            >
+              <!-- External link icon -->
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Launch Live Site
+            </a>
+            <!-- Secondary: GitHub source -->
+            <a
+              href="https://github.com/petermillsassanful/v2herbalcare-clinic"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--ghost modal__cta"
+              aria-label="View V2 Herbal Care source code on GitHub (opens in new tab)"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+              View Code
+            </a>
+            <button class="btn btn--ghost modal__close-btn">Close</button>
+          </footer>
+        </div>
+      </dialog>
+
+      <!-- =============================================
+           CONTACT SECTION — Phase 4
+      ============================================= -->
+      <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+
+        <div class="section-header reveal-item" data-reveal-group="contact">
+          <p class="mono-label section-eyebrow"><span aria-hidden="true">// </span>03. Contact</p>
+          <h2 class="section-title" id="contact-heading">Let's work together</h2>
+          <p class="contact-section__sub">
+            Whether it's a SOC role, a web project, or a Flutter app, I'm open to the right
+            opportunity. Send me a message and I'll get back to you.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+
+          <!-- Left: brief context -->
+          <aside class="contact-info reveal-item" data-reveal-group="contact">
+            <div class="contact-info__item">
+              <span class="contact-info__label mono-label">Based in</span>
+              <span class="contact-info__value">Ghana, West Africa</span>
+            </div>
+            <div class="contact-info__item">
+              <span class="contact-info__label mono-label">Available for</span>
+              <span class="contact-info__value">SOC roles &middot; Freelance &middot; Contracts</span>
+            </div>
+            <div class="contact-info__item">
+              <span class="contact-info__label mono-label">Response time</span>
+              <span class="contact-info__value">Usually within 48 hours</span>
+            </div>
+
+            <!-- Social quick-links inside the info column -->
+            <div class="contact-info__socials">
+              <a
+                href="https://github.com/petermillsassanful"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-social-link"
+                aria-label="GitHub profile (opens in new tab)"
+              >
+                <!-- GitHub mark -->
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+                </svg>
+                <span>GitHub</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/peter-mills-assanful-b9104a194"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-social-link"
+                aria-label="LinkedIn profile (opens in new tab)"
+              >
+                <!-- LinkedIn mark -->
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="mailto:peterassanful123@gmail.com"
+                class="contact-social-link"
+                aria-label="Send email to Peter"
+              >
+                <!-- Email icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m2 7 10 7 10-7"/>
+                </svg>
+                <span>Email</span>
+              </a>
+            </div>
+          </aside>
+
+          <!-- Right: contact form (Formspree-ready) -->
+          <div class="contact-form-wrap reveal-item" data-reveal-group="contact">
+            <!-- Success state — shown after valid submission -->
+            <div class="form-success" id="form-success" aria-live="polite" aria-atomic="true" hidden>
+              <div class="form-success__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="20" cy="20" r="16"/>
+                  <path d="M13 20l5 5 9-9"/>
+                </svg>
+              </div>
+              <h3 class="form-success__title">Message sent.</h3>
+              <p class="form-success__body">Thanks for reaching out. I'll get back to you within 48 hours.</p>
+              <button class="btn btn--ghost form-success__reset" id="form-reset-btn" type="button">
+                Send another message
+              </button>
+            </div>
+
+            <!-- The form -->
+            <form
+              id="contact-form"
+              class="contact-form glass"
+              action="https://formspree.io/f/xaewvlrv"
+              method="POST"
+              novalidate
+              aria-label="Contact form"
+            >
+              <!-- Name -->
+              <div class="form-group" id="group-name">
+                <label class="form-label" for="contact-name">
+                  Name <span class="form-required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Peter Mills"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                  aria-describedby="error-name"
+                />
+                <p class="form-error" id="error-name" role="alert" aria-live="polite"></p>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group" id="group-email">
+                <label class="form-label" for="contact-email">
+                  Email <span class="form-required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="contact-email"
+                  name="email"
+                  class="form-input"
+                  placeholder="hello@example.com"
+                  autocomplete="email"
+                  inputmode="email"
+                  required
+                  aria-required="true"
+                  aria-describedby="error-email"
+                />
+                <p class="form-error" id="error-email" role="alert" aria-live="polite"></p>
+              </div>
+
+              <!-- Message -->
+              <div class="form-group" id="group-message">
+                <label class="form-label" for="contact-message">
+                  Message <span class="form-required" aria-hidden="true">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  class="form-input form-textarea"
+                  placeholder="Tell me about the project, role, or just say hi…"
+                  rows="5"
+                  required
+                  aria-required="true"
+                  aria-describedby="error-message"
+                ></textarea>
+                <p class="form-error" id="error-message" role="alert" aria-live="polite"></p>
+              </div>
+
+              <!-- Honeypot spam prevention (hidden from humans) -->
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+              <!-- Submit -->
+              <button
+                type="submit"
+                id="contact-submit"
+                class="btn btn--primary contact-form__submit"
+                aria-describedby="submit-status"
+              >
+                <span class="contact-form__submit-label">Send message</span>
+                <!-- Spinner (shown while submitting) -->
+                <svg class="contact-form__spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false">
+                  <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <p id="submit-status" class="form-submit-status" aria-live="polite"></p>
+            </form>
+          </div>
+
+        </div><!-- /contact-layout -->
+      </section><!-- /contact -->
+
+    </main>
+
+    <!-- =============================================
+         FOOTER — Phase 4
+    ============================================= -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+
+        <!-- Logo / name mark -->
+        <p class="footer-brand">
+          <span class="footer-brand__name">Peter Mills Assanful</span>
+          <span class="footer-brand__role mono-label">Cybersecurity Developer</span>
+        </p>
+
+        <!-- Social links -->
+        <nav class="footer-socials" aria-label="Social media links">
+          <a
+            href="https://github.com/petermillsassanful"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            aria-label="GitHub (opens in new tab)"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+            </svg>
+            <span class="sr-only">GitHub</span>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/peter-mills-assanful-b9104a194"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social-link"
+            aria-label="LinkedIn (opens in new tab)"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+
+          <a
+            href="mailto:peterassanful123@gmail.com"
+            class="footer-social-link"
+            aria-label="Send email"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m2 7 10 7 10-7"/>
+            </svg>
+            <span class="sr-only">Email</span>
+          </a>
+        </nav>
+
+        <!-- Copyright -->
+        <p class="footer-copy mono-label">
+          <span aria-hidden="true">&copy;</span>
+          <span class="sr-only">Copyright</span>
+          <span id="footer-year"></span> Peter Mills Assanful. Built by hand, pixel by pixel.
+        </p>
+
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
