@@ -41,6 +41,7 @@
 
   /* Glass / translucency  */
   --glass-bg:        rgba(13, 18, 32, 0.65);
+  --glass-blur:      blur(12px);
   --glass-border:    rgba(255, 255, 255, 0.08);
   --glass-highlight: rgba(255, 255, 255, 0.04);
 
@@ -186,6 +187,8 @@ body {
   color: var(--clr-text-200);
   background-color: var(--clr-bg-900);
   background-image: linear-gradient(rgba(8, 12, 20, 0.72), rgba(8, 12, 20, 0.80)), url('circuit_bg.jpg');
+  background-image: linear-gradient(rgba(8, 12, 20, 0.72), rgba(8, 12, 20, 0.80)), -webkit-image-set(url('circuit_bg.webp') 1x, url('circuit_bg.jpg') 1x);
+  background-image: linear-gradient(rgba(8, 12, 20, 0.72), rgba(8, 12, 20, 0.80)), image-set(url('circuit_bg.webp') type('image/webp'), url('circuit_bg.jpg') type('image/jpeg'));
   background-repeat: repeat;
   background-size: 500px auto;
   background-attachment: fixed;
@@ -193,6 +196,10 @@ body {
   /* Smooth subpixel rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+section[id] {
+  scroll-margin-top: calc(72px + var(--space-4));
 }
 
 /* Focus ring — accessible, matches brand */
@@ -249,6 +256,17 @@ a {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Safety net: if JS doesn't fire, hero items become visible after 2s via CSS animation */
+@media (prefers-reduced-motion: no-preference) {
+  #hero-content .reveal-item {
+    animation: hero-fallback-reveal 0.01ms 2s forwards;
+  }
+  @keyframes hero-fallback-reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+/* When JS fires normally, it adds .is-visible which wins via specificity + no delay */
 
 /* Reduced motion: disable all animations for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
@@ -550,12 +568,26 @@ a {
   }
 }
 
-/* Mobile breakpoint */
+/* Mobile breakpoint & performance overrides */
 @media (max-width: 768px) {
+  :root {
+    /* Disable heavy multi-layer blur on mobile cards to avoid GPU/battery strain */
+    --glass-blur: none;
+    --glass-bg: rgba(13, 18, 32, 0.94);
+  }
+
+  body {
+    /* Prevent continuous full-screen repaints during mobile scrolling */
+    background-attachment: scroll;
+  }
+
   .navbar {
     margin: var(--space-3);
     border-radius: var(--radius-xl);
     padding: var(--space-3) var(--space-4);
+    /* Retain gentle blur on top-level fixed nav only */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .nav-links {
@@ -564,6 +596,32 @@ a {
 
   .hamburger {
     display: flex;
+  }
+
+  /* Optimize heavy box-shadows on mobile */
+  .about-terminal {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .skill-card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .project-card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    will-change: auto;
+  }
+
+  /* Disable unused hover blur overlays on touch/mobile screens */
+  .project-card__hover-overlay {
+    display: none;
+  }
+
+  /* Lighter modal backdrop filter on mobile devices */
+  .modal__inner {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(10, 15, 28, 0.94);
   }
 }
 
@@ -640,23 +698,35 @@ a {
   margin-bottom: var(--space-8);
 }
 
-/* Animated pulse dot (green = "online/available") */
+/* Animated pulse dot (green = "online/available") - GPU accelerated */
 .kicker__dot {
+  position: relative;
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--clr-success);
-  box-shadow: 0 0 0 0 rgba(34, 216, 110, 0.5);
+}
+
+.kicker__dot::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: var(--clr-success);
+  opacity: 0.6;
   animation: pulse-dot 2.4s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes pulse-dot {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(34, 216, 110, 0.5);
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
   }
-  50% {
-    box-shadow: 0 0 0 8px rgba(34, 216, 110, 0);
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
   }
 }
 
@@ -884,18 +954,6 @@ a {
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
-}
-
-/* ---------------------------------------------------------------
-   9. PLACEHOLDER SECTIONS (Phase 2+ content goes here)
---------------------------------------------------------------- */
-.section-placeholder {
-  min-height: 30vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 1px solid var(--glass-border);
-  color: var(--clr-text-400);
 }
 
 /* ---------------------------------------------------------------
@@ -2573,13 +2631,13 @@ a {
 
   /* Reveal items appear instantly without sliding */
   .reveal-item {
-    opacity: 0;
+    opacity: 1 !important;
     transform: none !important;
-    transition: opacity 0.01ms !important;
+    transition: none !important;
   }
 
   .reveal-item.is-visible {
-    opacity: 1;
+    opacity: 1 !important;
   }
 
   /* No card hover scale */
@@ -2595,8 +2653,15 @@ a {
     opacity: 1 !important;
   }
 
-  /* No pulse on live dot */
-  .modal__live-dot {
+  /* No pulse on live dot or kicker */
+  .modal__live-dot,
+  .kicker__dot::after {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* No bounce on scroll indicator */
+  .scroll-arrow {
     animation: none !important;
   }
 
@@ -2607,4 +2672,319 @@ a {
 }
 
 
+
+
+
+/* =============================================================
+   MOBILE RESPONSIVENESS OVERHAUL
+   Complete mobile-first pass for all sections.
+   All rules are in @media blocks — desktop is UNTOUCHED.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   M1. NAVIGATION — Hamburger, logo scale, theme toggle spacing
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Scale down logo */
+  .nav-logo__img {
+    height: 36px;
+  }
+
+  /* Give theme toggle breathing room next to hamburger */
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    margin-right: var(--space-2);
+  }
+
+  /* Bump hamburger tap target to 44px */
+  .hamburger {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   M2. HERO SECTION — Headline cap, padding, canvas opacity
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Reduce canvas & overlays so they don't overpower text */
+  .hero__canvas   { opacity: 0.55; }
+  .hero__scanlines { opacity: 0.18; }
+  .hero__glow      { opacity: 0.7; }
+}
+
+@media (max-width: 480px) {
+  /* Cap hero headline so it never overflows on 375-430px screens */
+  .hero__headline {
+    font-size: clamp(2.6rem, 13vw, 4.5rem);
+  }
+
+  /* Tighter top padding — the nav is narrower on mobile */
+  .hero__content {
+    padding-top: calc(68px + var(--space-6));
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+@media (max-width: 360px) {
+  .hero__headline {
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+  }
+}
+
+/* ---------------------------------------------------------------
+   M3. ABOUT SECTION — Two-column → single column (already 1024px)
+   Adding missing touch-friendly tweaks
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .about-bio__lead {
+    font-size: var(--text-base);
+    padding-left: var(--space-4);
+  }
+
+  .about-terminal {
+    /* Prevent card from stretching wider than viewport */
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-10);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .about-stat__value {
+    font-size: var(--text-xl);
+  }
+
+  /* Stack stats vertically on very small screens */
+  .about-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .about-stat__divider {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   M4. SKILLS GRID — Already 1-col at 768px, add padding fix
+--------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .skills-grid {
+    gap: var(--space-3);
+  }
+
+  .skill-card {
+    padding: var(--space-5);
+  }
+
+  .skills-title {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* ---------------------------------------------------------------
+   M5. WORK / PROJECTS — Already 1-col at 768px
+   Add full-width touch targets
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .work-section {
+    padding: var(--space-14) var(--space-5);
+  }
+
+  .project-card article {
+    min-height: 260px;
+  }
+
+  /* Active press feedback for touch */
+  .project-card:active {
+    transform: scale(0.985);
+    transition: transform 0.1s ease;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-section {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .project-card__body {
+    padding: var(--space-5);
+  }
+
+  .project-card__title {
+    font-size: var(--text-xl);
+  }
+}
+
+/* ---------------------------------------------------------------
+   M6. CONTACT SECTION — Already 1-col at 768px
+   Ensure 44px tap targets, full-width button, touch active state
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: var(--space-14) var(--space-5);
+  }
+
+  .contact-layout {
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+
+  /* Minimum 44px tap target on inputs */
+  .form-input {
+    min-height: 44px;
+    padding: var(--space-3) var(--space-4);
+    font-size: 1rem; /* Prevent iOS zoom on focus */
+  }
+
+  .form-textarea {
+    min-height: 120px;
+  }
+
+  /* Submit button: full-width, 48px height for easy tapping */
+  .contact-form__submit {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
+
+  /* Touch press feedback */
+  .contact-form__submit:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .contact-form {
+    padding: var(--space-6);
+  }
+
+  /* Section subtitle max width on mobile */
+  .contact-section__sub {
+    max-width: 100%;
+    font-size: var(--text-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: var(--space-10) var(--space-4);
+  }
+
+  .contact-form {
+    padding: var(--space-5);
+  }
+}
+
+/* ---------------------------------------------------------------
+   M7. FOOTER — Already 1-col at 768px
+   Center everything, icons centered below name
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .footer-brand {
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .footer-socials {
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .footer-copy {
+    text-align: center;
+    font-size: 0.6rem;
+  }
+}
+
+/* ---------------------------------------------------------------
+   M8. TYPOGRAPHY — clamp() on section headings, 90% max-width
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Use fluid section titles */
+  .section-title {
+    font-size: clamp(1.6rem, 6vw, 2.5rem);
+  }
+
+  /* Readable line length */
+  .about-bio__lead,
+  .about-bio__body,
+  .contact-section__sub,
+  .hero__descriptor {
+    max-width: 90%;
+  }
+
+  /* Prevent any content causing horizontal scroll */
+  .about-section,
+  .work-section,
+  .contact-section {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: clamp(1.4rem, 7vw, 2.2rem);
+  }
+
+  .modal__title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+}
+
+/* ---------------------------------------------------------------
+   M9. GLOBAL OVERFLOW GUARD — prevent any horizontal scroll
+--------------------------------------------------------------- */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}
+
+/* ---------------------------------------------------------------
+   M10. SECTION SPACING — Reduce padding on mobile
+--------------------------------------------------------------- */
+@media (max-width: 480px) {
+  section[id] {
+    scroll-margin-top: 60px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   M11. PREFERS-REDUCED-MOTION — Canvas & animation fallbacks
+   (Added here as supplement to existing block at top of file)
+--------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  /* Ensure hero items are always visible even without JS reveal */
+  #hero-content .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* No canvas animation - static frame only (handled in JS) */
+  .hero__canvas {
+    opacity: 0.4;
+  }
+}
 

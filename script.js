@@ -21,6 +21,10 @@
 
   const ctx = canvas.getContext('2d');
 
+  // --- Mobile detection & power saving ---
+  const isMobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
   // --- Configuration ---
   const CFG = {
     grid: {
@@ -30,7 +34,7 @@
       dotOpacity: 0.18,      // node dot opacity
     },
     particles: {
-      count: 55,             // number of floating particles
+      count: isMobile ? 22 : 55, // reduced count on mobile to conserve CPU/battery
       maxRadius: 2.2,
       minRadius: 0.4,
       speed: 0.3,            // base drift speed
@@ -53,8 +57,18 @@
 
   function resize() {
     const hero = document.getElementById('hero');
-    W = canvas.width  = hero ? hero.offsetWidth  : window.innerWidth;
-    H = canvas.height = hero ? hero.offsetHeight : window.innerHeight;
+    const newW = hero ? hero.offsetWidth  : window.innerWidth;
+    const newH = hero ? hero.offsetHeight : window.innerHeight;
+
+    // Ignore tiny resizes caused by mobile address bar expansion/collapse
+    if (W && H && Math.abs(newW - W) < 5 && Math.abs(newH - H) < 15) return;
+
+    W = canvas.width  = newW;
+    H = canvas.height = newH;
+
+    if (prefersReducedMotion.matches && typeof particles !== 'undefined' && particles.length) {
+      drawStaticFrame();
+    }
   }
 
   const resizeObserver = new ResizeObserver(resize);
@@ -164,10 +178,25 @@
     }
   }
 
+  // --- Static frame for reduced motion fallback ---
+  function drawStaticFrame() {
+    ctx.clearRect(0, 0, W, H);
+    drawGrid();
+    particles.slice(0, 16).forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${CFG.colors.accent}, 0.25)`;
+      ctx.fill();
+    });
+  }
+
   // --- Animation loop ---
-  let animationId;
+  let animationId = null;
+  let isAnimating = false;
+  let isHeroVisible = true;
   let then = performance.now();
-  const FPS_CAP = 60;
+  // 30 FPS cap on mobile to save battery; 60 FPS on desktop
+  const FPS_CAP = isMobile ? 30 : 60;
   const FRAME_MS = 1000 / FPS_CAP;
 
   // --- Matrix rain ---
@@ -206,9 +235,10 @@
   }
 
   function animate(now) {
+    if (!isAnimating) return;
     animationId = requestAnimationFrame(animate);
 
-    /* FPS cap to avoid burning GPU on high-refresh screens */
+    /* FPS cap to avoid burning GPU/battery */
     const delta = now - then;
     if (delta < FRAME_MS) return;
     then = now - (delta % FRAME_MS);
@@ -239,20 +269,64 @@
     }
   }
 
+  function startAnimation() {
+    if (isAnimating || prefersReducedMotion.matches || document.hidden || !isHeroVisible) return;
+    isAnimating = true;
+    then = performance.now();
+    animationId = requestAnimationFrame(animate);
+  }
+
+  function stopAnimation() {
+    isAnimating = false;
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  // --- Reduced motion handling with live listener ---
+  function handleReducedMotionChange() {
+    if (prefersReducedMotion.matches) {
+      stopAnimation();
+      drawStaticFrame();
+    } else {
+      startAnimation();
+    }
+  }
+
+  prefersReducedMotion.addEventListener('change', handleReducedMotionChange);
+
+  // --- IntersectionObserver: Pause canvas when hero is scrolled out of viewport ---
+  const heroEl = document.getElementById('hero');
+  if (heroEl && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isHeroVisible = entry.isIntersecting;
+        if (isHeroVisible) {
+          startAnimation();
+        } else {
+          stopAnimation(); // Free GPU/CPU completely when reading below hero
+        }
+      });
+    }, { threshold: 0 });
+
+    heroObserver.observe(heroEl);
+  }
+
   /* Pause animation when tab is hidden (performance) */
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-      cancelAnimationFrame(animationId);
-    } else {
-      then = performance.now();
-      animate(then);
+      stopAnimation();
+    } else if (isHeroVisible) {
+      startAnimation();
     }
   });
 
-  /* Reduce animation when prefers-reduced-motion */
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!prefersReducedMotion.matches) {
-    animate(performance.now());
+  // Start or render static frame
+  if (prefersReducedMotion.matches) {
+    drawStaticFrame();
+  } else {
+    startAnimation();
   }
 })();
 
@@ -403,11 +477,16 @@
     }
   );
 
-  /* ── Observe hero items (Phase 1 — set sequential index) ── */
+  /* ── Hero items: reveal immediately with stagger — they're in the viewport on load ── */
   document.querySelectorAll('#hero-content .reveal-item').forEach((el, index) => {
-    el.dataset.revealIndex = index;
-    el.dataset.revealGroup = 'hero';
-    observer.observe(el);
+    const delay = index * STAGGER_MS;
+    el.style.transitionDelay = `${delay}ms`;
+    // Double-rAF ensures the browser has painted opacity:0 before we flip to is-visible
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        el.classList.add('is-visible');
+      });
+    });
   });
 
   /* ── Observe all non-hero reveal items (Phase 2+) ── */
@@ -432,13 +511,28 @@
 
   if (!header) return;
 
-  /* Add scrolled class for elevated nav styling */
+  /* Add scrolled class for elevated nav styling — throttled with requestAnimationFrame */
+  let scrollTicking = false;
+  let isScrolled = false;
+
+  const updateNavScroll = () => {
+    const shouldBeScrolled = window.scrollY > 30;
+    if (shouldBeScrolled !== isScrolled) {
+      isScrolled = shouldBeScrolled;
+      header.classList.toggle('scrolled', isScrolled);
+    }
+    scrollTicking = false;
+  };
+
   const scrollHandler = () => {
-    header.classList.toggle('scrolled', window.scrollY > 30);
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateNavScroll);
+    }
   };
 
   window.addEventListener('scroll', scrollHandler, { passive: true });
-  scrollHandler(); /* Run once on init */
+  updateNavScroll(); /* Run once on init */
 
   /* Highlight the nav link whose section is in view */
   const sections = document.querySelectorAll('section[id]');
@@ -594,31 +688,39 @@
   glow.setAttribute('aria-hidden', 'true');
   glow.style.cssText = `
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    margin-left: -300px;
+    margin-top: -300px;
     pointer-events: none;
     z-index: 9999;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45, 127, 255, 0.055) 0%, transparent 70%);
     opacity: 0;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.4s ease;
+    will-change: transform;
+    transform: translate3d(-1000px, -1000px, 0);
   `;
   document.body.appendChild(glow);
 
-  let mouseX = 0, mouseY = 0;
-  let rafId;
+  let mouseX = -1000, mouseY = -1000;
+  let ticking = false;
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    glow.style.opacity = '1';
 
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      glow.style.background = `radial-gradient(
-        600px circle at ${mouseX}px ${mouseY}px,
-        rgba(45, 127, 255, 0.055),
-        transparent 50%
-      )`;
-    });
-  });
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        glow.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        glow.style.opacity = '1';
+        ticking = false;
+      });
+    }
+  }, { passive: true });
 
   /* Fade out glow when mouse leaves window */
   document.addEventListener('mouseleave', () => {

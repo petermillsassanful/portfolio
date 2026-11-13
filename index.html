@@ -60,7 +60,17 @@
       <nav class="navbar glass" aria-label="Primary navigation">
         <!-- Logo / Wordmark -->
         <a href="#hero" class="nav-logo" aria-label="Peter Mills Assanful – Back to top">
-          <img src="logo.png" alt="Peter Mills Assanful" class="nav-logo__img" />
+          <picture>
+            <source srcset="logo.webp" type="image/webp" />
+            <img
+              src="logo.png"
+              alt="Peter Mills Assanful"
+              class="nav-logo__img"
+              width="423"
+              height="140"
+              fetchpriority="high"
+            />
+          </picture>
         </a>
 
         <!-- Desktop nav links -->
@@ -1280,7 +1290,7 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
 
